@@ -1,19 +1,51 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { Button, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from './src/screens/Home';
+import AddQues from './src/screens/AddQues';
+import QuesDetails from './src/screens/QuesDetails';
+import Profile from './src/screens/Profile';
 
-export default function App() {
+import {Ionicons, Entypo } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
+const HomeTabStack = () => {
+  return(
+      <Tab.Navigator 
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === 'Home') {
+              return <Ionicons name={'ios-home'} size={size} color={color} />;
+            } else if (route.name === 'Profile') {
+              return <Entypo name={'user'} size={size} color={color} />;
+            }
+            return <Ionicons name={'md-add'} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'black',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="AddQuestion" component={AddQues} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>
+  )
+}
+
+const App = () => {
+  const HomeStack = createStackNavigator();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Home" options={{headerShown: false}} component={HomeTabStack} />
+        <HomeStack.Screen options={{ title: 'My home' }} name="QuestionDetails" component={QuesDetails} tabBarVisible={false} />
+      </HomeStack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
