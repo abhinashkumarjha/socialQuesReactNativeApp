@@ -1,10 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View 
+} from 'react-native';
 
-const QuesDetails = () => {
+const QuesDetails = ({ route }) => {
+  const { question } = route.params;
+  //console.log(questionDetail)
   return (
     <View style={styles.container}>
-      <Text>Welcome to QuesDetails</Text>
+      <Text>{question.ques}</Text>
     </View>
   );
 }
@@ -12,9 +18,7 @@ const QuesDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 15
   },
 });
 

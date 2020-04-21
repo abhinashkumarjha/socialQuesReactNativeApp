@@ -3,10 +3,11 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  FlatList,
-  TouchableOpacity
+  FlatList
 } from 'react-native';
 import { Context as QuesContext } from './../context/questionsContext';
+
+import QuestionCard from './../components/QuestionCard';
 
 
 const Home = ({ navigation }) => {
@@ -17,14 +18,7 @@ const Home = ({ navigation }) => {
         data={state}
         keyExtractor = {(item)=>item.id}
         renderItem= {({item})=>{
-          return (
-              <TouchableOpacity onPress={()=>navigation.navigate('QuestionDetails', { id: item.id })}>
-                  <View style={styles.rowStyle}> 
-                      <Text style={styles.questionStyle}>{item.ques}</Text>
-                      <Text>{item.askedBy}</Text>
-                  </View>
-              </TouchableOpacity>
-          )
+          return <QuestionCard question={item} navigation={navigation}/>
       }}
       />
     </View>
@@ -35,18 +29,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 50,
     flex: 1
-  },
-  rowStyle :{
-    borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 15,
-    padding: 10,
-    margin: 5,
-    backgroundColor: 'white',
-    borderRadius: 5
-  },
-  questionStyle:{
-    fontSize: 24,
   }
 });
 
