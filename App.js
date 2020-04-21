@@ -25,7 +25,7 @@ const HomeTabStack = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'black',
+          activeTintColor: '#3273a8',
           inactiveTintColor: 'gray',
         }}
       >

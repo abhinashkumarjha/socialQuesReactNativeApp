@@ -22,8 +22,8 @@ const AddQues = ({ navigation }) => {
       <Button 
         title={'Add Question'}
         onPress = {()=>{
-          addQuestion(question, 'Abhinash', ()=>{
-            navigation.navigate('Home');
+            addQuestion(question, 'Abhinash', ()=>{
+              navigation.navigate('Home');
           })
         }}
       />

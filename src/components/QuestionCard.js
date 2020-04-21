@@ -9,7 +9,7 @@ import {
 const styles = StyleSheet.create({
     cardStyle :{
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: 'gray',
         marginBottom: 15,
         padding: 10,
         margin: 5,
@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
         borderRadius: 5
       },
       questionStyle:{
-        fontSize: 24,
+        fontSize: 16,
+        fontWeight: 'bold'
       },
       authorStyle: {
           fontStyle: 'italic'
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
       },
       details: {
-          color: 'blue'
+          color: '#3273a8'
       }
 });
 
@@ -35,25 +36,28 @@ const QuestionCard = ({question, navigation}) => {
   const [ cardLayout, setCardLayout ] = useState('small');
 
   return(
-        <TouchableOpacity onPress={()=>navigation.navigate('QuestionDetails', { question })}>
-            <View style={styles.cardStyle}> 
-                <Text style={styles.questionStyle}>{question.ques}</Text>
-                <View style={styles.innerContainerStyle}>
-                    <Text style={styles.authorStyle}>
-                        {question.askedBy}
+        <View style={styles.cardStyle}> 
+            <Text style={styles.questionStyle}>{question.ques}</Text>
+            <View style={styles.innerContainerStyle}>
+                <Text style={styles.authorStyle}>
+                    {`by ${question.askedBy}`}
+                </Text>
+                <TouchableOpacity 
+                    onPress={()=>navigation.navigate('QuestionDetails', { question })}
+                >
+                    <Text style={styles.details}>{'write an answer'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={()=>{
+                        cardLayout === 'small' ? setCardLayout('big'):setCardLayout('small')
+                    }}
+                >
+                    <Text style={styles.details}>
+                        {cardLayout === 'small' ?'see details':'hide details'}
                     </Text>
-                    <TouchableOpacity 
-                        onPress={()=>{
-                            cardLayout === 'small' ? setCardLayout('big'):setCardLayout('small')
-                        }}
-                    >
-                        <Text style={styles.details}>
-                            {cardLayout === 'small' ?'see details':'hide details'}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
 
