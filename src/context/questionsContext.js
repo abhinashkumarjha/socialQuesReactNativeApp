@@ -2,7 +2,7 @@ import createContext from './createDataContext';
 import initalQuesData from './../data/question';
 
 
-const blogReducer = (state, actions) =>{
+const quesReducer = (state, actions) =>{
     switch(actions.type){
         case 'add_answer':
             return state.map((ques)=>{
@@ -14,7 +14,7 @@ const blogReducer = (state, actions) =>{
         case 'add_question':
             return [ 
                     { 
-                        id: Math.floor(Math.random()*9999999), 
+                        id: (Math.floor(Math.random()*9999999)).toString(), 
                         ques: actions.payload.ques,
                         askedBy: actions.payload.askedBy,
                         ans: []
@@ -58,7 +58,7 @@ const addAnswer = ( dispatch ) => {
 }
 
 export const { Context, Provider } = createContext(
-    blogReducer, 
+    quesReducer, 
     { addQuestion, addAnswer }, 
     initalQuesData
 )

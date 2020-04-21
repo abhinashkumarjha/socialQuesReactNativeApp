@@ -28,24 +28,45 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
       },
       details: {
-          color: '#3273a8'
+          color: '#3273a8',
+          fontWeight: 'bold'
       }
 });
 
 const QuestionCard = ({question, navigation}) => {
   const [ cardLayout, setCardLayout ] = useState('small');
-
+  let tempQues = question.ques;
+  let tempAns ='';
+  let tempAuthor = '';
+  if(tempQues.length > 200 && cardLayout==='small'){
+    tempQues = `${tempQues.substr(0, 200)}....`;
+  }
+  if(question.ans.length > 0){
+    if(cardLayout==='small' && (question['ans'][0]['text']).length > 200){     
+        tempAns = `${(question['ans'][0]['text']).substr(0, 200)}....`
+    } else {
+        tempAns = question['ans'][0]['text']
+    }
+    tempAuthor = question['ans'][0]['by']
+  }
   return(
         <View style={styles.cardStyle}> 
-            <Text style={styles.questionStyle}>{question.ques}</Text>
+            <Text style={styles.questionStyle}>{tempQues}</Text>
             <View style={styles.innerContainerStyle}>
                 <Text style={styles.authorStyle}>
-                    {`by ${question.askedBy}`}
+                    {`Question by ${question.askedBy}`}
                 </Text>
+                <Text>{`${question.ans.length} Answers`}</Text>
+            </View>
+            <Text style={styles.answer}>{tempAuthor.length > 0 ? `${tempAuthor} answered as :`: ''}</Text>
+            <Text style={styles.answer}>
+                {tempAns}
+            </Text>
+            <View style={styles.innerContainerStyle}>
                 <TouchableOpacity 
                     onPress={()=>navigation.navigate('QuestionDetails', { question })}
                 >
-                    <Text style={styles.details}>{'write an answer'}</Text>
+                    <Text style={styles.details}>{'Write an answer'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={()=>{
@@ -53,7 +74,7 @@ const QuestionCard = ({question, navigation}) => {
                     }}
                 >
                     <Text style={styles.details}>
-                        {cardLayout === 'small' ?'see details':'hide details'}
+                        {cardLayout === 'small' ?'See full details':'hide details'}
                     </Text>
                 </TouchableOpacity>
             </View>

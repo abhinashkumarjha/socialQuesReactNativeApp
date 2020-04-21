@@ -13,12 +13,19 @@ const AddQues = ({ navigation }) => {
   const { addQuestion } = useContext(QuesContext);
   return (
     <View style={styles.container}>
-      <Text>Ask a new Question</Text>
-      <TextInput 
-        style={styles.input}
-        value={question}
-        onChangeText={setQuestion}
-      />
+      <Text style={styles.header}>Ask a new Question</Text>
+      <View style={styles.textAreaContainer} >
+          <TextInput
+            style={styles.textArea}
+            underlineColorAndroid="transparent"
+            placeholder="Write your question here"
+            placeholderTextColor="grey"
+            numberOfLines={5}
+            multiline={true}
+            value={question}
+            onChangeText={setQuestion}
+          />
+      </View>
       <Button 
         title={'Add Question'}
         onPress = {()=>{
@@ -34,16 +41,24 @@ const AddQues = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50
+    marginTop: 50,
+    paddingHorizontal: 10
   },
-  input: {
-    fontSize: 18,
+  header:{
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  textAreaContainer: {
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 15,
+    borderRadius: 5,
     padding: 5,
-    margin: 5
+    marginVertical: 10
   },
+  textArea: {
+    justifyContent: "flex-start",
+    textAlignVertical: 'top'
+  }
 });
 
 export default AddQues

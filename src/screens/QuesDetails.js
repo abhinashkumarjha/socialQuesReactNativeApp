@@ -9,6 +9,7 @@ import {
   FlatList 
 } from 'react-native';
 import { Context as QuesContext } from './../context/questionsContext';
+import { Entypo } from '@expo/vector-icons'
 
 const QuesDetails = ({ route }) => {
   const { question } = route.params;
@@ -38,23 +39,27 @@ const QuesDetails = ({ route }) => {
           }}
         />
         <View style={styles.answerContainer}>
-          <Text style={styles.answerLabel}>Answers</Text>
+          <Text style={styles.answerLabel}>Answers submitted </Text>
           <FlatList
             style={styles.answerList} 
             data={question.ans}
             renderItem={({item})=>{
               return (
                 <View>
-                  <Text style={styles.answerStyle}>
-                    {item.by}
-                  </Text>
+                  <View style={styles.answerHeader}>
+                    <Entypo name="user" size={35}/>
+                    <View style={styles.answerHeaderTextContainer}>
+                      <Text style={styles.answerHeaderName}>{item.by}</Text>
+                      <Text style={styles.answerHeaderlabel}>{'Answered as'}</Text>
+                    </View>
+                  </View>
                   <Text style={styles.answerStyle}>
                     {item.text}
                   </Text>
                 </View>
               )}
             }
-            keyExtractor={(item)=>Math.floor(Math.random()*1000000)}
+            keyExtractor={(item)=>(Math.floor(Math.random()*1000000)).toString()}
           />
         </View>
       </ScrollView >
@@ -92,11 +97,26 @@ const styles = StyleSheet.create({
   },
   answerLabel:{
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginVertical: 15
   },
   answerStyle:{
     fontSize: 16,
     marginVertical: 5
+  },
+  answerHeader: {
+    flexDirection: 'row',
+    alignItems: "center"
+  },
+  answerHeaderName:{
+    fontWeight:'bold'
+  },
+  answerHeaderTextContainer: {
+    paddingLeft: 15
+  },
+  answerHeaderlabel:{
+    fontStyle: 'italic',
+    fontWeight: '400'
   }
 });
 
