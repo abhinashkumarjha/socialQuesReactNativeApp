@@ -61,14 +61,4 @@ export const { Context, Provider } = createContext(
     quesReducer, 
     { addQuestion, addAnswer }, 
     initalQuesData
-)
-
-
-
-
-
-
-
-
-
-
+);

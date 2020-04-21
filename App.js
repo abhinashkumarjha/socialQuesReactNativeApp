@@ -8,7 +8,9 @@ import AddQues from './src/screens/AddQues';
 import QuesDetails from './src/screens/QuesDetails';
 import Profile from './src/screens/Profile';
 import { Provider as QuesProvider } from './src/context/questionsContext';
+import { Provider as AuthProvider, Context as AuthContext } from './src/context/authContext';
 import {Ionicons, Entypo } from '@expo/vector-icons';
+import SignInScreen from './src/screens/SignIn';
 
 const Tab = createBottomTabNavigator();
 const HomeTabStack = () => {
@@ -38,22 +40,43 @@ const HomeTabStack = () => {
 
 const App = () => {
   const HomeStack = createStackNavigator();
-  return (
+  let { state } = React.useContext(AuthContext);
+  console.log('state',state);
+  return(
     <NavigationContainer>
       <HomeStack.Navigator>
-        <HomeStack.Screen 
-          name="Home" 
-          options={{headerShown: false}} 
-          component={HomeTabStack} 
-        />
-        <HomeStack.Screen 
-          options={{ title: 'My home' }} 
-          name="QuestionDetails" 
-          component={QuesDetails}
-        />
+      {state.userToken!==null ? (
+          <>
+            {console.log('all screens shoul come')}
+            <HomeStack.Screen 
+              name="Home" 
+              options={{headerShown: false}} 
+              component={HomeTabStack} 
+            />
+            <HomeStack.Screen 
+              options={{ title: 'Question Details' }} 
+              name="QuestionDetails" 
+              component={QuesDetails}
+            />
+            <HomeStack.Screen 
+              options={{ title: 'Login' }} 
+              name="SignIn" 
+              component={SignInScreen}
+            />
+          </>
+        ):(
+          <>
+          {console.log('i shouldnot run after auth')}
+          <HomeStack.Screen 
+            options={{ title: 'Login' }} 
+            name="SignIn" 
+            component={SignInScreen}
+          />
+          </>
+        )}
       </HomeStack.Navigator>
-    </NavigationContainer>
-  );
-}
+    </NavigationContainer>)
+  }
 
-export default ()=><QuesProvider><App /></QuesProvider>
+
+export default ()=><AuthProvider><QuesProvider><App /></QuesProvider></AuthProvider>
