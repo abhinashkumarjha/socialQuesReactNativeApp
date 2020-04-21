@@ -7,7 +7,7 @@ import Home from './src/screens/Home';
 import AddQues from './src/screens/AddQues';
 import QuesDetails from './src/screens/QuesDetails';
 import Profile from './src/screens/Profile';
-
+import { Provider as QuesProvider } from './src/context/questionsContext';
 import {Ionicons, Entypo } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -41,11 +41,19 @@ const App = () => {
   return (
     <NavigationContainer>
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" options={{headerShown: false}} component={HomeTabStack} />
-        <HomeStack.Screen options={{ title: 'My home' }} name="QuestionDetails" component={QuesDetails} tabBarVisible={false} />
+        <HomeStack.Screen 
+          name="Home" 
+          options={{headerShown: false}} 
+          component={HomeTabStack} 
+        />
+        <HomeStack.Screen 
+          options={{ title: 'My home' }} 
+          name="QuestionDetails" 
+          component={QuesDetails}
+        />
       </HomeStack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default App
+export default ()=><QuesProvider><App /></QuesProvider>
