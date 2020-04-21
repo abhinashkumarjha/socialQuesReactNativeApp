@@ -46,8 +46,6 @@ const SignInScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const { signIn, state } = useContext(AuthContext);
     const { error } = state;
-    console.log('Error from login screen ->', error);
-    console.log('State from login screen ->',state);
     return (
       <View style={styles.container}>
         <Text style={styles.logo}>SoQues</Text>
