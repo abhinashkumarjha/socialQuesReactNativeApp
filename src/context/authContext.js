@@ -9,20 +9,23 @@ const reducer = (state, action) => {
                 ...state,
                 isSignout: false,
                 userToken: action.payload.token,
-                userDetails: action.payload.userDetails
+                userDetails: action.payload.userDetails,
+                error:''
             };
         case 'SIGN_OUT':
             return {
                 ...state,
                 isSignout: true,
                 userToken: null,
+                userDetails: {}
             };
         case 'SIGNIN_ERROR':
             return {
                 ...state,
                 isSignout: true,
                 userToken: null,
-                error: action.payload.error
+                error: action.payload.error,
+                userDetails: {}
             };
         default:
             return state
@@ -30,11 +33,8 @@ const reducer = (state, action) => {
 }
 
 const signIn = (dispatch) => {
-    return (username, password) => {
+    return (username, password, callback) => {
         if(UserData[username] && UserData[username].password === password){
-            console.log(username)
-            console.log(UserData[username].password)
-            console.log(password)
             dispatch({ 
                 type: 'SIGN_IN', 
                 payload: {
@@ -46,7 +46,8 @@ const signIn = (dispatch) => {
             dispatch({ 
                 type: 'SIGNIN_ERROR',
                 payload: {
-                    error: 'Incorrect combination of username and password'
+                    error: 'Incorrect combination of username and password',
+                    token: null
                 }
             })
         }

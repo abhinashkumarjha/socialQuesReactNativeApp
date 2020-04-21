@@ -38,45 +38,45 @@ const HomeTabStack = () => {
   )
 }
 
+const LogInNavigator = () => {
+  const Stack = createStackNavigator();
+  return(
+    <Stack.Navigator>
+      <Stack.Screen 
+        options={{ title: 'Login' }} 
+        name="SignIn" 
+        component={SignInScreen}
+      />
+    </Stack.Navigator>
+  )
+}
+
+const AuthenticatedNavigator = () =>{
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Home" 
+        options={{headerShown: false}} 
+        component={HomeTabStack} 
+      />
+      <Stack.Screen 
+        options={{ title: 'Question Details' }} 
+        name="QuestionDetails" 
+        component={QuesDetails}
+      />
+    </Stack.Navigator>
+  )
+}
+
 const App = () => {
   const HomeStack = createStackNavigator();
   let { state } = React.useContext(AuthContext);
-  console.log('state',state);
   return(
     <NavigationContainer>
-      <HomeStack.Navigator>
-      {state.userToken!==null ? (
-          <>
-            {console.log('all screens shoul come')}
-            <HomeStack.Screen 
-              name="Home" 
-              options={{headerShown: false}} 
-              component={HomeTabStack} 
-            />
-            <HomeStack.Screen 
-              options={{ title: 'Question Details' }} 
-              name="QuestionDetails" 
-              component={QuesDetails}
-            />
-            <HomeStack.Screen 
-              options={{ title: 'Login' }} 
-              name="SignIn" 
-              component={SignInScreen}
-            />
-          </>
-        ):(
-          <>
-          {console.log('i shouldnot run after auth')}
-          <HomeStack.Screen 
-            options={{ title: 'Login' }} 
-            name="SignIn" 
-            component={SignInScreen}
-          />
-          </>
-        )}
-      </HomeStack.Navigator>
-    </NavigationContainer>)
-  }
-
+      {state.userToken===null ? (<LogInNavigator />):(<AuthenticatedNavigator />)}
+    </NavigationContainer>
+  )
+}
 
 export default ()=><AuthProvider><QuesProvider><App /></QuesProvider></AuthProvider>
